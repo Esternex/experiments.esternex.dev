@@ -7,17 +7,18 @@
     
     <style>
         :root {
-            --bg-color: #111111;
             --text-color: #ededed;
-            --secondary-text: #888888;
-            --card-bg: #1a1a1a;
-            --border-color: #333333;
-            --hover-border: #666666;
-            --hover-bg: #1e1e1e;
+            --secondary-text: #a0a0a0;
+            /* Glassy card backgrounds */
+            --card-bg: rgba(20, 20, 20, 0.4); 
+            --hover-bg: rgba(30, 30, 30, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --hover-border: rgba(46, 204, 113, 0.5); /* Green accent on hover */
         }
 
         body {
-            background-color: var(--bg-color);
+            /* Very dark base color */
+            background-color: #060a07; 
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -26,26 +27,56 @@
             justify-content: center;
             min-height: 100vh;
             box-sizing: border-box;
+            /* Ensure the body doesn't cause scrollbars from background scaling */
+            overflow-x: hidden; 
         }
 
+        /* --- GRADIENT ABUSE BACKGROUND --- */
+        .ambient-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            /* Multiple overlapping green radial gradients */
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(13, 107, 61, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(26, 153, 85, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(6, 68, 38, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 80% 90%, rgba(46, 204, 113, 0.15) 0%, transparent 40%);
+            filter: blur(30px);
+            animation: gradientDrift 15s ease-in-out infinite alternate;
+        }
+
+        /* Animates the background to make it feel alive */
+        @keyframes gradientDrift {
+            0% { transform: scale(1) translate(0px, 0px); }
+            50% { transform: scale(1.1) translate(2%, 2%); }
+            100% { transform: scale(1.05) translate(-2%, -2%); }
+        }
+
+        /* --- LAYOUT --- */
         .container {
             width: 100%;
-            max-width: 800px;
+            /* Widened from 800px to 1200px to fill out the page more */
+            max-width: 1200px; 
             margin-top: 6vh;
         }
 
-        /* --- Header Styling --- */
+        /* --- HEADER --- */
         .back-link {
             display: inline-block;
             margin-bottom: 2rem;
             color: var(--secondary-text);
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
+            font-size: 0.95rem;
+            transition: color 0.2s ease, transform 0.2s ease;
         }
 
         .back-link:hover {
             color: var(--text-color);
+            transform: translateX(-4px);
         }
 
         header {
@@ -53,75 +84,85 @@
         }
 
         h1 {
-            font-weight: 600;
+            font-weight: 700;
             margin: 0 0 0.5rem 0;
-            letter-spacing: -0.5px;
-            font-size: 2.2rem;
+            letter-spacing: -1px;
+            font-size: 3rem;
+            /* Optional: Add a slight green tint to the title text */
+            background: linear-gradient(to right, #ffffff, #a3f7bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
             color: var(--secondary-text);
             margin: 0;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            max-width: 600px;
         }
 
-        /* --- Grid & Card Styling --- */
+        /* --- GRID & CARDS --- */
         .experiments-grid {
             display: grid;
-            /* Creates a responsive grid that automatically wraps cards */
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 1.5rem;
         }
 
         .experiment-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 1.75rem;
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            /* Glassmorphism effect */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .experiment-card:hover {
             border-color: var(--hover-border);
             background-color: var(--hover-bg);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(46, 204, 113, 0.15);
         }
 
         .experiment-title {
             font-weight: 600;
-            font-size: 1.15rem;
-            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            margin: 0 0 0.75rem 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        /* Small animated arrow on hover */
         .experiment-title::after {
             content: "→";
             color: var(--secondary-text);
             font-family: ui-monospace, SFMono-Regular, monospace;
-            transition: transform 0.2s ease, color 0.2s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .experiment-card:hover .experiment-title::after {
-            transform: translateX(4px);
-            color: var(--text-color);
+            transform: translateX(6px);
+            color: #2ecc71; /* Bright green arrow on hover */
         }
 
         .experiment-desc {
             color: var(--secondary-text);
-            font-size: 0.95rem;
+            font-size: 1rem;
             margin: 0;
-            line-height: 1.5;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
+
+    <!-- The animated green gradient layer -->
+    <div class="ambient-background"></div>
 
     <div class="container">
         
