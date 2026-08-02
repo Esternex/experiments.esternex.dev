@@ -1,33 +1,39 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MIDI to GMD Converter – Convert MIDI Files to GMD Online</title>
+    <title>MIDI to GMD Converter | Convert MIDI Files to GMD Online</title>
 
-<meta name="description" content="Convert MIDI files to GMD format directly in your browser. Free online MIDI to GMD converter with no installation required.">
+    <meta name="description"
+        content="Convert MIDI files to GMD format online. Free MIDI to GMD converter that runs directly in your browser with no installation required.">
 
-<link rel="canonical" href="https://yourdomain.com/miditogmd">
+    <link rel="canonical" href="https://yourdomain.com/miditogmd">
 
-<meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow">
 
-<meta property="og:title" content="MIDI to GMD Converter">
-<meta property="og:description" content="Convert MIDI files into GMD format directly in your browser.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://yourdomain.com/miditogmd">
+    <meta property="og:title" content="MIDI to GMD Converter">
+    <meta property="og:description"
+        content="Convert MIDI files into GMD format directly in your browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/miditogmd">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "MIDI to GMD Converter",
-  "applicationCategory": "MusicApplication",
-  "operatingSystem": "Web",
-  "description": "A browser-based tool for converting MIDI files into GMD format."
-}
-</script>
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "MIDI to GMD Converter",
+        "applicationCategory": "MusicApplication",
+        "operatingSystem": "Web",
+        "description": "Browser-based MIDI to GMD converter."
+    }
+    </script>
+
+
     <style>
         :root {
             --bg-color: #111111;
@@ -38,239 +44,626 @@
             --border-color: #333333;
         }
 
+
+        * {
+            box-sizing: border-box;
+        }
+
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+
             min-height: 100vh;
             margin: 0;
+            padding: 60px 0;
+
             text-align: center;
         }
 
+
         .container {
-            max-width: 500px;
             width: 90%;
+            max-width: 700px;
         }
+
 
         h1 {
+            font-size: 2.2rem;
             font-weight: 600;
-            margin-bottom: 0.2rem;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.8px;
+            margin-bottom: 10px;
         }
 
-        p.subtitle {
+
+        .subtitle {
             color: #888;
-            margin-bottom: 2.5rem;
-            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
         }
+
 
         #drop-zone {
             width: 100%;
             height: 220px;
+
             background-color: var(--box-bg);
-            border: 2px dashed var(--border-color);
+
+            border:
+                2px dashed
+                var(--border-color);
+
             border-radius: 12px;
+
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+
             flex-direction: column;
+
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
+
+            transition:
+                border-color .2s ease,
+                background-color .2s ease;
         }
+
 
         #drop-zone:hover {
             border-color: var(--accent-color);
         }
 
+
         #drop-zone.dragover {
             border-color: var(--hover-accent);
-            background-color: #222222;
+            background-color: #222;
         }
+
 
         #drop-zone p {
             margin: 0;
-            color: var(--text-color);
-            pointer-events: none;
             font-weight: 500;
+            pointer-events: none;
         }
+
 
         #drop-zone span {
-            font-size: 0.85em;
+            margin-top: 10px;
             color: #666;
-            margin-top: 8px;
+            font-size: .85rem;
             pointer-events: none;
         }
 
+
         #file-input {
-            display: none;
+            display:none;
         }
+
 
         #status {
-            margin-top: 2rem;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            color: #888;
-            font-size: 0.9rem;
-            min-height: 1.5em;
-        }
-        
-        .spinner {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid #888;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 8px;
-            vertical-align: middle;
+            margin-top: 25px;
+
+            font-family:
+                ui-monospace,
+                SFMono-Regular,
+                Menlo,
+                Monaco,
+                Consolas,
+                monospace;
+
+            color:#888;
+            min-height:25px;
+            font-size:.9rem;
         }
 
-        @keyframes spin { 
-            to { transform: rotate(360deg); } 
+
+        .spinner {
+            display:inline-block;
+
+            width:12px;
+            height:12px;
+
+            border:
+                2px solid #888;
+
+            border-top-color:transparent;
+
+            border-radius:50%;
+
+            animation:
+                spin 1s linear infinite;
+
+            margin-right:8px;
         }
+
+
+        @keyframes spin {
+            to {
+                transform:rotate(360deg);
+            }
+        }
+
+
+        .seo-content {
+
+            margin-top:70px;
+
+            text-align:left;
+
+            line-height:1.7;
+
+            color:#ccc;
+        }
+
+
+        .seo-content h2 {
+
+            color:#ededed;
+
+            margin-top:45px;
+
+            font-size:1.35rem;
+        }
+
+
+        .seo-content h3 {
+
+            color:#ededed;
+
+            margin-top:30px;
+
+            font-size:1.05rem;
+        }
+
+
+        .seo-content li {
+
+            margin-bottom:8px;
+        }
+
     </style>
+
 </head>
+
+
+
 <body>
 
-    <div class="container">
-        <h1>MidiToGMD</h1>
-        <p class="subtitle">Convert your MIDI files to playable GMDs directly in the browser.</p>
 
-        <div id="drop-zone">
-            <p>Drag & Drop a .mid file here</p>
-            <span>or click to browse</span>
-        </div>
-        <input type="file" id="file-input" accept=".mid,.midi">
+<main class="container">
 
-        <div id="status"><div class="spinner"></div>Loading Python runtime...</div>
-    </div>
 
-    <script>
-        const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('file-input');
-        const statusDiv = document.getElementById('status');
-        
-        let pyodideReady = false;
-        let pyodideInstance = null;
-        let pythonScript = "";
+<h1>MIDI to GMD Converter</h1>
 
-        // The URL to your raw python script
-        const SCRIPT_URL = "https://raw.githubusercontent.com/Esternex/MidiToGMD/refs/heads/main/MidiToGMD.py";
 
-        async function init() {
-            try {
-                // 1. Initialize Pyodide
-                pyodideInstance = await loadPyodide();
-                
-                // 2. Fetch the Python script from GitHub
-                statusDiv.innerHTML = '<div class="spinner"></div>Fetching script from GitHub...';
-                const response = await fetch(SCRIPT_URL);
-                if (!response.ok) throw new Error("Failed to fetch Python script.");
-                pythonScript = await response.text();
+<p class="subtitle">
+Convert MIDI files to GMD format directly in your browser.
+No installation required.
+</p>
 
-                // 3. Install external dependencies if your script uses any (like 'mido')
-                // This is wrapped in a try/catch in case you don't actually need it.
-                await pyodideInstance.loadPackage("micropip");
-                const micropip = pyodideInstance.pyimport("micropip");
-                try {
-                    await micropip.install("mido"); 
-                } catch(e) { /* Ignore if not needed */ }
-                
-                statusDiv.innerText = "Ready. Waiting for MIDI file.";
-                pyodideReady = true;
-            } catch (err) {
-                statusDiv.innerText = "Error initializing: " + err.message;
-                console.error(err);
-            }
-        }
 
-        init();
 
-        // --- Drag & Drop UI Handlers ---
-        dropZone.addEventListener('click', () => fileInput.click());
-        
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
+<div id="drop-zone"
+     role="button"
+     tabindex="0"
+     aria-label="Upload MIDI file">
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
-        });
+    <p>Drop MIDI file → Convert to GMD</p>
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            if (e.dataTransfer.files.length > 0) {
-                processFile(e.dataTransfer.files[0]);
-            }
-        });
+    <span>
+        or click to browse (.mid / .midi)
+    </span>
 
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                processFile(e.target.files[0]);
-            }
-            // Reset input so the same file can be selected again if needed
-            e.target.value = ''; 
-        });
+</div>
 
-        // --- The Core Conversion Logic ---
-        async function processFile(file) {
-            if (!pyodideReady) {
-                alert("Please wait for the Python runtime to finish loading.");
-                return;
-            }
-            if (!file.name.toLowerCase().endsWith('.mid') && !file.name.toLowerCase().endsWith('.midi')) {
-                alert("Please upload a valid .mid file.");
-                return;
-            }
 
-            statusDiv.innerHTML = `<div class="spinner"></div>Processing ${file.name}...`;
 
-            try {
-                // 1. Read the uploaded file into memory
-                const arrayBuffer = await file.arrayBuffer();
-                const uint8View = new Uint8Array(arrayBuffer);
+<input
+    type="file"
+    id="file-input"
+    accept=".mid,.midi"
+>
 
-                // 2. Write the file into Pyodide's virtual filesystem
-                pyodideInstance.FS.writeFile("input.mid", uint8View);
 
-                // 3. Setup sys.argv exactly as your script expects it:
-                // py MidiToGMD.py input.mid output.gmd
-                pyodideInstance.runPython(`
-                    import sys
-                    sys.argv = ['MidiToGMD.py', 'input.mid', 'output.gmd']
-                `);
 
-                // 4. Execute your downloaded Python script
-                pyodideInstance.runPython(pythonScript);
+<div id="status">
+Ready. Waiting for MIDI file.
+</div>
 
-                // 5. Read the generated output file from the virtual filesystem
-                const outData = pyodideInstance.FS.readFile("output.gmd");
 
-                // 6. Create a download link and trigger the download
-                const blob = new Blob([outData], { type: 'application/octet-stream' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                // Preserve the original file name, but change extension to .gmd
-                a.download = file.name.replace(/\.midi?$/i, '.gmd');
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
 
-                statusDiv.innerText = "Success! File converted and downloaded.";
-            } catch (err) {
-                statusDiv.innerText = "Error during conversion. Check console for details.";
-                console.error("Conversion Error:", err);
-            }
-        }
-    </script>
+
+<section class="seo-content">
+
+
+<h2>Convert MIDI to GMD Online</h2>
+
+
+<p>
+This free MIDI to GMD converter transforms MIDI files into GMD format
+directly inside your browser. The conversion runs locally using
+WebAssembly, meaning your MIDI files are processed on your device instead
+of being uploaded to a server.
+</p>
+
+
+<p>
+The tool is designed for musicians, producers, and developers who need
+to convert MIDI drum patterns and General MIDI data into GMD-compatible
+files quickly.
+</p>
+
+
+
+<h2>How to convert MIDI files to GMD</h2>
+
+
+<ol>
+
+<li>
+Select a MIDI file using the upload area above.
+</li>
+
+<li>
+Wait while the browser converts the MIDI data.
+</li>
+
+<li>
+Download your generated GMD file.
+</li>
+
+</ol>
+
+
+
+<h2>Frequently Asked Questions</h2>
+
+
+
+<h3>What is a GMD file?</h3>
+
+<p>
+A GMD file is a format used for storing musical data such as
+General MIDI mappings and drum-related information.
+</p>
+
+
+
+<h3>Is this MIDI to GMD converter free?</h3>
+
+<p>
+Yes. The converter is free to use and works directly in your browser.
+No desktop software installation is required.
+</p>
+
+
+
+<h3>Are MIDI files uploaded anywhere?</h3>
+
+<p>
+No. Conversion happens locally inside your browser.
+Your MIDI files stay on your device.
+</p>
+
+
+
+<h3>What MIDI files are supported?</h3>
+
+<p>
+The converter supports standard MIDI files with
+.mid and .midi extensions.
+</p>
+
+
+
+</section>
+
+
+</main>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+
+
+<script>
+
+
+const dropZone =
+    document.getElementById("drop-zone");
+
+const fileInput =
+    document.getElementById("file-input");
+
+const statusDiv =
+    document.getElementById("status");
+
+
+let pyodideReady = false;
+
+let pyodideInstance = null;
+
+let pythonScript = "";
+
+
+
+const SCRIPT_URL =
+"https://raw.githubusercontent.com/Esternex/MidiToGMD/refs/heads/main/MidiToGMD.py";
+
+
+
+async function initPyodide(){
+
+
+    if(pyodideReady)
+        return;
+
+
+
+    statusDiv.innerHTML =
+    '<div class="spinner"></div>Loading converter...';
+
+
+
+    pyodideInstance =
+        await loadPyodide();
+
+
+
+    const response =
+        await fetch(SCRIPT_URL);
+
+
+
+    if(!response.ok)
+        throw new Error(
+            "Unable to load converter script"
+        );
+
+
+    pythonScript =
+        await response.text();
+
+
+
+    await pyodideInstance.loadPackage(
+        "micropip"
+    );
+
+
+    const micropip =
+        pyodideInstance.pyimport(
+            "micropip"
+        );
+
+
+    await micropip.install(
+        "mido"
+    );
+
+
+    pyodideReady = true;
+
+}
+
+
+
+
+dropZone.onclick = () =>
+    fileInput.click();
+
+
+
+dropZone.addEventListener(
+"dragover",
+e => {
+
+    e.preventDefault();
+
+    dropZone.classList.add(
+        "dragover"
+    );
+
+});
+
+
+
+dropZone.addEventListener(
+"dragleave",
+() =>
+dropZone.classList.remove(
+    "dragover"
+));
+
+
+
+dropZone.addEventListener(
+"drop",
+e => {
+
+    e.preventDefault();
+
+    dropZone.classList.remove(
+        "dragover"
+    );
+
+
+    if(e.dataTransfer.files.length)
+        processFile(
+            e.dataTransfer.files[0]
+        );
+
+});
+
+
+
+fileInput.onchange = e => {
+
+    if(e.target.files.length)
+        processFile(
+            e.target.files[0]
+        );
+
+
+    e.target.value = "";
+
+};
+
+
+
+
+
+async function processFile(file){
+
+
+try {
+
+
+await initPyodide();
+
+
+
+if(
+!file.name.match(
+    /\.(mid|midi)$/i
+)
+){
+
+alert(
+"Please upload a MIDI file."
+);
+
+return;
+
+}
+
+
+
+statusDiv.innerHTML =
+`<div class="spinner"></div>Processing ${file.name}...`;
+
+
+
+const buffer =
+await file.arrayBuffer();
+
+
+
+pyodideInstance.FS.writeFile(
+"input.mid",
+new Uint8Array(buffer)
+);
+
+
+
+pyodideInstance.runPython(`
+
+import sys
+
+sys.argv=[
+'MidiToGMD.py',
+'input.mid',
+'output.gmd'
+]
+
+`);
+
+
+
+
+pyodideInstance.runPython(
+    pythonScript
+);
+
+
+
+const output =
+pyodideInstance.FS.readFile(
+    "output.gmd"
+);
+
+
+
+const blob =
+new Blob(
+    [output],
+    {
+        type:
+        "application/octet-stream"
+    }
+);
+
+
+
+const url =
+URL.createObjectURL(blob);
+
+
+
+const link =
+document.createElement("a");
+
+
+link.href=url;
+
+
+link.download =
+file.name.replace(
+/\.midi?$/i,
+".gmd"
+);
+
+
+
+document.body.appendChild(link);
+
+link.click();
+
+link.remove();
+
+
+URL.revokeObjectURL(url);
+
+
+
+statusDiv.innerText =
+"Success! File converted.";
+
+
+
+}
+
+catch(err){
+
+console.error(err);
+
+
+statusDiv.innerText =
+"Conversion failed.";
+
+}
+
+
+}
+
+
+</script>
+
+
 </body>
+
 </html>
+```
