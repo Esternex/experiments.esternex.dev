@@ -396,12 +396,18 @@ let pyodideInstance = null;
 
 let pythonScript = "";
 
-
-
 const SCRIPT_URL =
-"https://raw.githubusercontent.com/Esternex/MidiToGMD/refs/heads/main/MidiToGMD.py";
+    `https://raw.githubusercontent.com/Esternex/MidiToGMD/main/MidiToGMD.py?v=${Date.now()}`;
 
+const response = await fetch(SCRIPT_URL, {
+    cache: "no-store"
+});
 
+if (!response.ok) {
+    throw new Error("Unable to load converter script");
+}
+
+pythonScript = await response.text();
 
 async function initPyodide(){
 
