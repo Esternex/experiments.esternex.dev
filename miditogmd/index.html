@@ -391,23 +391,29 @@ const statusDiv =
 
 
 let pyodideReady = false;
-
 let pyodideInstance = null;
-
 let pythonScript = "";
 
 const SCRIPT_URL =
     `https://raw.githubusercontent.com/Esternex/MidiToGMD/main/MidiToGMD.py?v=${Date.now()}`;
 
-const response = await fetch(SCRIPT_URL, {
-    cache: "no-store"
-});
+async function loadPythonScript() {
+    const response = await fetch(SCRIPT_URL, {
+        cache: "no-store"
+    });
 
-if (!response.ok) {
-    throw new Error("Unable to load converter script");
+    if (!response.ok) {
+        throw new Error("Unable to load converter script");
+    }
+
+    pythonScript = await response.text();
 }
 
-pythonScript = await response.text();
+loadPythonScript()
+    .then(() => {
+        console.log("Python script loaded");
+    })
+    .catch(console.error);
 
 async function initPyodide(){
 
