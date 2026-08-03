@@ -568,15 +568,15 @@ new Uint8Array(buffer)
 
 
 pyodideInstance.runPython(`
-
 import sys
 
-sys.argv=[
-'MidiToGMD.py',
-'input.mid',
-'output.gmd'
+sys.argv = [
+    "MidiToGMD.py",
+    "input.mid",
+    "output.gmd",
+    "--pitch-y-scale",
+    "1"
 ]
-
 `);
 
 
